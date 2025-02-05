@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SPRING_DATASOURCE_USERNAME=SA
+      - SA_PASSWORD=Rootp@ss123
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+
+  newsletter-service:
+    build: .
+    container_name: newsletter-service
+    depends_on:
+      - mysql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/newsletter_db
+      - SPRING_DATASOURCE_USERNAME=newsletter_user
+      - SPRING_DATASOURCE_PASSWORD=newsletter_pass
+    ports:
+      - "8080:8080"
+
+  volumes:
+    mysql-data:
