@@ -6,9 +6,17 @@ import lombok.Setter;
 import jakarta.validation.constraints.Email;
 
 @Data
-@Getter
-@Setter
+
 public class SubscriptionDTO {
     @Email(message = "Email should be valid")
     private String email;
+
+    // Getters and Setters
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

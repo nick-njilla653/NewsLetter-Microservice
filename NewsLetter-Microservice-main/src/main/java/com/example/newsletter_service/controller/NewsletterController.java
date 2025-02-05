@@ -7,6 +7,7 @@ import com.example.newsletter_service.service.NewsletterService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +17,17 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/newsletters")
-@RequiredArgsConstructor
+
 @Tag(name = "Newsletter API", description = "APIs pour gérer les newsletters et les abonnements")
+
 public class NewsletterController {
 
     private final NewsletterService newsletterService;
+
+    @Autowired
+    public NewsletterController(NewsletterService newsletterService) {
+        this.newsletterService = newsletterService;
+    }
 
     @PostMapping("/subscribe")
     @Operation(summary = "S'abonner à la newsletter")

@@ -8,6 +8,7 @@ import com.example.newsletter_service.model.Subscriber;
 import com.example.newsletter_service.repository.NewsletterRepository;
 import com.example.newsletter_service.repository.SubscriberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
@@ -16,11 +17,20 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
+
 public class NewsletterService {
     private final NewsletterRepository newsletterRepository;
     private final SubscriberRepository subscriberRepository;
     private final EmailService emailService;
+
+    @Autowired
+    public NewsletterService(NewsletterRepository newsletterRepository,
+                             SubscriberRepository subscriberRepository,
+                             EmailService emailService) {
+        this.newsletterRepository = newsletterRepository;
+        this.subscriberRepository = subscriberRepository;
+        this.emailService = emailService;
+    }
 
     @Transactional
     public void subscribe(SubscriptionDTO dto) {
